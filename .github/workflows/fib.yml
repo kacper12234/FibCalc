@@ -43,7 +43,7 @@ jobs:
         with:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
-          platforms: darwin/arm64/v8,linux/amd64 
+          platforms: linux/arm64/v8,linux/amd64 
           context: .
           file: ./dockerfile
           push: true
