@@ -1,13 +1,23 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include "BigInt.h"
-BigInt* fib(BigInt **cache,int n)
-{
-    if (BigInt_compare(cache[n],BigInt_construct(-1)) == 0){
-        BigInt_assign(cache[n],fib(cache,n-1));
-	BigInt_add(cache[n],fib(cache,n-2));
+
+BigInt* countValue(int n){
+    BigInt *a,*b;
+    a = BigInt_construct(0);
+    b = BigInt_construct(1);
+    if (n == 0){
+        return a;
+    } else if (n == 1) {
+        return b;
+    } else {
+        for (int i=2;i<=n;i++){
+            if (BigInt_compare(b,a) == 1)
+                BigInt_add(a,b);
+            else
+                BigInt_add(b,a);
+        }
+        return BigInt_compare(b,a) == 1 ? b : a;
     }
-    return cache[n];
 }
 
 int main()
@@ -22,16 +32,7 @@ int main()
             printf ("Wartosc musi byc nieujemna\n");
         }
     } while (n < 0);
-    BigInt **cache;
-    cache = malloc((n+1)*sizeof(BigInt*));
-    cache[0] = BigInt_construct(0);
-    if (n>0) {
-        cache[1] = BigInt_construct(1);
-    }
-    for (int i=2;i<=n;i++){
-        cache[i] = BigInt_construct(-1);
-    }
-    BigInt_print(fib(cache,n));
+    BigInt_print(countValue(n));
     printf("\n");
     getchar();
     return 0;
