@@ -1,5 +1,8 @@
 FROM alpine
 COPY fibcalc.c .
+COPY BigInt.c .
+COPY BigInt.h .
+COPY makefile .
 RUN apk add --no-cache gcc libc-dev
-RUN gcc -o fibCalc fibcalc.c
+RUN make
 CMD ["/fibCalc"]
