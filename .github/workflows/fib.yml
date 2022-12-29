@@ -59,6 +59,7 @@ jobs:
           push: true
           tags: |
             kacper12234/fibcalc
+            ghcr.io/${{ github.repository }}
       
       #Przenies cache'a
       - name: Move cache
