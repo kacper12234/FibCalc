@@ -46,6 +46,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GH_TOKEN }}
 
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: |
+            kacper12234/fibcalc
+            ghcr.io/${{ github.repository }}
+
       #Zbudowanie i wypchniecie obrazu
       - name: Build and push
         id: docker_build
@@ -57,9 +65,8 @@ jobs:
           context: .
           file: ./dockerfile
           push: true
-          tags: |
-            kacper12234/fibcalc
-            ghcr.io/${{ github.repository }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
       
       #Przenies cache'a
       - name: Move cache
