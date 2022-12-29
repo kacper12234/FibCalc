@@ -1,8 +1,10 @@
-FROM alpine
+FROM gcc AS buildstage
 COPY fibcalc.c .
 COPY BigInt.c .
 COPY BigInt.h .
 COPY makefile .
-RUN apk add --no-cache gcc libc-dev make
 RUN make
+
+FROM alpine
+COPY --from=buildstage fibcalc .
 CMD ["/fibcalc"]
