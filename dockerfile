@@ -7,4 +7,4 @@ RUN make
 
 FROM alpine
 COPY --from=buildstage fibcalc .
-CMD ["/fibcalc"]
+CMD ["./fibcalc"]
