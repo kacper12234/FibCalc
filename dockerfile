@@ -6,6 +6,8 @@ COPY BigInt.h .
 COPY makefile .
 RUN make
 
-FROM alpine
-COPY --from=buildstage fibcalc .
-CMD ["./fibcalc"]
+FROM scratch
+COPY --from=buildstage fibcalc /
+COPY --from=buildstage /lib/ld-musl-x86_64.so.1 /lib/
+COPY --from=buildstage /lib/libc.musl-x86_64.so.1 /lib/
+CMD ["/fibcalc"]
